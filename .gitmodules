@@ -1,0 +1,3 @@
+[submodule ".textadept/modules/textredux"]
+	path = .textadept/modules/textredux
+	url = https://github.com/rgieseke/textredux.git
