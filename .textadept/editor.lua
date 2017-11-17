@@ -1,5 +1,4 @@
 local _M = {}
-local _view_mapping = {}
 
 function _M.delete_indentation()
   
@@ -7,8 +6,6 @@ end
 
 local function split_window(v, vertical)
   o, n = view.split(v, vertical)
-  _view_mapping[o] = n
-  _view_mapping[n] = o
 end
 
 function _M.split_window_below()
