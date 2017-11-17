@@ -2,6 +2,7 @@ local _M = {}
 local menubar
 local menubar_hidden = false
 
+-- Menu bar
 function _M.hide_menu_bar()
   if menubar_hidden then
     return
@@ -28,8 +29,20 @@ function _M.toggle_menu_bar()
   end
 end
 
+-- Editing
 function _M.delete_indentation()
-  
+  if buffer.line_from_position(_G.buffer, buffer.current_pos) == 0 then
+    return
+  else
+    buffer.line_up()
+    textadept.editing.join_lines()
+  end
+end
+
+function _M.open_line()
+  local pos = buffer.current_pos
+  buffer.new_line()
+  buffer.goto_pos(pos)
 end
 
 local function split_window(v, vertical)

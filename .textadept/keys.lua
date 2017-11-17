@@ -58,7 +58,11 @@ _M['aw'] = buffer.copy
 _M['cy'] = buffer.paste
 
 -- Others
-_M['a^'] = textadept.editing.join_lines
+_M['a^'] = editor.delete_indentation
+_M['cO'] = editor.open_line
+_M['cx'] = ut(_M['cx'], {
+  ct = buffer.line_transpose
+})
 
 -- Search
 _M['cs'] = ui.find.find_incremental
