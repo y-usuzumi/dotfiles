@@ -2,6 +2,7 @@ local _M = {}
 _M._VERSION = '0.2'
 
 local textredux = require 'textredux'
+local file_browser = require 'file_browser'
 local utils = require './utils'
 local editor = require './editor'
 local ut = utils.update_table
@@ -101,7 +102,8 @@ _M['am'] = ut(_M['am'], {
   f = {
     e = {
       d = function() io.open_file(_USERHOME.."/init.lua") end
-    }
+    },
+    t = file_browser.init
   }
 })
 
