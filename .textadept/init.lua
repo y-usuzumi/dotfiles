@@ -1,10 +1,7 @@
-events.connect(events.INITIALIZED, function() 
-  textadept.menu.menubar = nil 
-end)
-
-utils = require 'utils'
+myutils = require 'utils'
 mykeys = require './keys'
-utils.update_table(keys, mykeys)
+myeditor = require './editor'
+myutils.update_table(keys, mykeys)
 
 io.quick_open_max = 100000
 
@@ -15,3 +12,7 @@ if CURSES then
 else
   ui.set_theme('light', {font = 'Hack', fontsize = 12})
 end
+
+events.connect(events.INITIALIZED, function() 
+  myeditor.hide_menu_bar()
+end)

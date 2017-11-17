@@ -1,4 +1,32 @@
 local _M = {}
+local menubar
+local menubar_hidden = false
+
+function _M.hide_menu_bar()
+  if menubar_hidden then
+    return
+  else
+    menubar_hidden = true
+    menubar = textadept.menu.menubar
+    textadept.menu.menubar = nil
+  end
+end
+
+function _M.show_menu_bar()
+  if menubar_hidden then
+    menubar_hidden = false
+    textadept.menu.menubar = menubar
+  else
+  end
+end
+
+function _M.toggle_menu_bar()
+  if menubar_hidden then
+    _M.show_menu_bar()
+  else
+    _M.hide_menu_bar()
+  end
+end
 
 function _M.delete_indentation()
   

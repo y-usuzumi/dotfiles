@@ -14,6 +14,7 @@ _M['cx'] = ut(_M['cx'], {
   a = buffer.select_all,
   h = buffer.select_all
 })
+_M['cah'] = textadept.editing.select_paragraph
 
 -- Movement
 _M['cn'] = buffer.line_down
@@ -89,14 +90,12 @@ _M['cc'] = ut(_M['cc'], {
   }
 })
 
-_M['at'] = function()
-  ui.dialogs.optionselect{title="SDF",text="GGG",items={"A", "B"}}
-end
+-- Lua
+_M['a:'] = ui.command_entry.focus
 
--- Commands
+-- Others
 _M['ax'] = textadept.menu.select_command
 _M['cP'] = textadept.menu.select_command
-
 
 _M['am'] = ut(_M['am'], {
   f = {
@@ -106,9 +105,15 @@ _M['am'] = ut(_M['am'], {
     t = file_browser.init
   }
 })
+_M['am'] = ut(_M['am'], {
+  T = {
+    m = editor.toggle_menu_bar
+  }
+})
+-- Playground
+_M['at'] = function()
+  ui.dialogs.optionselect{title="SDF",text="GGG",items={"A", "B"}}
+end
 
-_M['cah'] = textadept.editing.select_paragraph
-
-_M['a:'] = ui.command_entry.focus
 
 return _M
