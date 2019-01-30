@@ -4,8 +4,9 @@
 (doom! :feature
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        eval              ; run code, run (also, repls)
-       (evil +everywhere); come to the dark side, we have cookies
-       file-templates    ; auto-snippets for empty files
+       ;; (evil +everywhere); come to the dark side, we have cookies
+       evil
+       ;; file-templates    ; auto-snippets for empty files
        (lookup           ; helps you navigate your code and documentation
         +docsets)        ; ...or in Dash docsets locally
        snippets          ; my elves. They type so I don't have to
@@ -70,7 +71,7 @@
        ;;gist              ; interacting with github gists
        ;;macos             ; MacOS-specific commands
        ;;make              ; run make tasks from Emacs
-       ;;magit             ; a git porcelain for Emacs
+       magit             ; a git porcelain for Emacs
        ;;password-store    ; password manager for nerds
        ;;pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
@@ -163,4 +164,4 @@
         ("melpa" . "https://melpa.org/packages/")))
 (setq doom-leader-alt-key "M-m"
       doom-localleader-alt-key "M-m m")
-
+(setq evil-default-state 'emacs)

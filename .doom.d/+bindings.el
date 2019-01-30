@@ -277,53 +277,7 @@
         (:after swiper
           :map swiper-map
           [backtab] #'+ivy/wgrep-occur))
-
-      (:when (featurep! :completion helm)
-        (:after helm
-          (:map helm-map
-            [left]     #'left-char
-            [right]    #'right-char
-            "C-S-n"    #'helm-next-source
-            "C-S-p"    #'helm-previous-source
-            "C-j"      #'helm-next-line
-            "C-k"      #'helm-previous-line
-            "C-S-j"    #'helm-next-source
-            "C-S-k"    #'helm-previous-source
-            "C-f"      #'helm-next-page
-            "C-S-f"    #'helm-previous-page
-            "C-u"      #'helm-delete-minibuffer-contents
-            "C-w"      #'backward-kill-word
-            "C-r"      #'evil-paste-from-register ; Evil registers in helm! Glorious!
-            "C-s"      #'helm-minibuffer-history
-            "C-b"      #'backward-word
-            ;; Swap TAB and C-z
-            [tab]      #'helm-execute-persistent-action
-            "C-z"      #'helm-select-action)
-          (:after swiper-helm
-            :map swiper-helm-keymap [backtab] #'helm-ag-edit)
-          (:after helm-ag
-            :map helm-ag-map
-            "C--"      #'+helm-do-ag-decrease-context
-            "C-="      #'+helm-do-ag-increase-context
-            [backtab]  #'helm-ag-edit
-            [left]     nil
-            [right]    nil)
-          (:after helm-files
-            :map (helm-find-files-map helm-read-file-map)
-            [C-return] #'helm-ff-run-switch-other-window
-            "C-w"      #'helm-find-files-up-one-level)
-          (:after helm-locate
-            :map helm-generic-files-map
-            [C-return] #'helm-ff-run-switch-other-window)
-          (:after helm-buffers
-            :map helm-buffer-map
-            [C-return] #'helm-buffer-switch-other-window)
-          (:after helm-regexp
-            :map helm-moccur-map
-            [C-return] #'helm-moccur-run-goto-line-ow)
-          (:after helm-grep
-            :map helm-grep-map
-            [C-return] #'helm-grep-run-other-window-action))))
+      )
 
 ;;; :ui
 (map! (:when (featurep! :ui hl-todo)
@@ -475,7 +429,6 @@
             ((featurep! :completion helm)  #'helm-resume))
 
       :desc "Find file in project"  "SPC"  #'projectile-find-file
-      :desc "Find file in project"  "M-m"  #'projectile-find-file
       :desc "Blink cursor line"     "DEL"  #'+nav-flash/blink-cursor
       :desc "Jump to bookmark"      "RET"  #'bookmark-jump
 
@@ -820,17 +773,31 @@ customized by changing `+default-repeat-forward-key' and
     "C-S-k"  #'scroll-down-command))
 
 (defun backward-kill-line (arg)
-    "Kill ARG lines backward."
-    (interactive "p")
-    (kill-line (- 1 arg)))
+  "Kill ARG lines backward."
+  (interactive "p")
+  (kill-line (- 1 arg)))
+
+;;(defun project-find-current-symbol ()
+;;  "Find the symbol under the cursor in the project"
+;;  (interactive "p")
+;;  )
 
 ;; Yukio Usuzumi
-(map! :e "RET"       #'newline-and-indent
-      :e "C-S-k"     #'backward-kill-line
-      :g "M-<up>"    #'evil-window-up
-      :g "M-<down>"  #'evil-window-down
-      :g "M-<left>"  #'evil-window-left
-      :g "M-<right>" #'evil-window-right
-      :g "C-a"       #'mwim-beginning-of-code-or-line
-      :g "C-e"       #'mwim-end-of-code-or-line
-      :g "M-S-<mouse-1>" #'mc/add-cursor-on-click)
+(map! :e "RET"           #'newline-and-indent
+      :e "C-S-k"         #'backward-kill-line
+      :g "M-<up>"        #'evil-window-up
+      :g "M-<down>"      #'evil-window-down
+      :g "M-<left>"      #'evil-window-left
+      :g "M-<right>"     #'evil-window-right
+      :g "C-a"           #'mwim-beginning-of-code-or-line
+      :g "C-e"           #'mwim-end-of-code-or-line
+      :g "M-S-<mouse-1>" #'mc/add-cursor-on-click
+      :g "C-="           #'er/expand-region
+      :g "C--"           #'er/contract-region)
+
+(map! :leader
+      :desc "Find file in project"            "M-m"  #'projectile-find-file
+      (:prefix ("/" . "search")))
+;;        :desc "Search current symbol in project"                "P"
+;;        (cond ((featurep! :completion ivy) #'projectile-find-current-symbol)
+;;              ((featurep! :completion helm) #'+helm/project-search))))
