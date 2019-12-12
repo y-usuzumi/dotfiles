@@ -44,14 +44,15 @@ This function should only modify configuration layer settings."
      git
      markdown
      multiple-cursors
-     ;; org
+     org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      syntax-checking
-     ;; (treemacs :variables treemacs-use-collapsed-directories 1)
-     neotree
+     ;; NOTE: See below in user-init!!!
+     (treemacs :variables treemacs-use-collapsed-directories 1)
+     ;; neotree
      version-control
      themes-megapack
      ;; helm
@@ -60,7 +61,7 @@ This function should only modify configuration layer settings."
      ;; is due to a "Cannot split main window" or something when attempting
      ;; to tab into a child folder
 
-     ;; lsp  ;; Language Server Protocol
+     (lsp :variables lsp-ui-doc-enable nil)  ;; Language Server Protocol
      ;; csharp
      major-modes
      ;; fsharp
@@ -68,19 +69,23 @@ This function should only modify configuration layer settings."
      ;; (haskell :variables ;; Or optionally just haskell without the variables.
      ;;          haskell-completion-backend 'ghci
      ;;          haskell-process-type 'stack-ghci)
-     (haskell :variables haskell-completion-backend 'intero)
-     html
-     idris
+     ;; (haskell :variables haskell-completion-backend 'intero)
+     ;; haskell
+     ;; html
+     ;; idris
      ;; javascript
      ;; nginx
      ;; purescript
      ;; (python :variables
      ;;         python-enable-yapf-format-on-save t
      ;;         python-sort-imports-on-save t)
-     python
+     (python :variables
+             python-backend 'lsp)
+             ;; python-lsp-server 'mspyls)
      ;; ruby
-     rust
-     typescript
+     (rust :variables
+           rust-backend 'lsp)
+     ;; typescript
      yaml
 
      ;; frameworks
@@ -100,10 +105,9 @@ This function should only modify configuration layer settings."
    dotspacemacs-additional-packages '(
                                       ;; A list of packages that cannot be updated.
                                       smooth-scrolling
-                                      all-the-icons
+                                      ;; all-the-icons
                                       ox-reveal
                                       vue-mode
-                                      ;; (lsp-haskell :location (recipe :fetcher github :repo "emacs-lsp/lsp-haskell"))
                                       ;; haskell-emacs
                                       ;; haskell-emacs-base
                                       ;; haskell-emacs-text
@@ -247,7 +251,8 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   ;; dotspacemacs-mode-line-theme '(spacemacs :separator wave :separator-scale 1.5)
+   dotspacemacs-mode-line-theme 'all-the-icons
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -508,10 +513,10 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;;       '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
   ;;         ("org-cn"   . "http://elpa.zilongshanren.com/org/")
   ;;         ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
-  ;; (setq configuration-layer-elpa-archives
-       ;; '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-       ;;   ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
-       ;;   ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
+  (setq configuration-layer-elpa-archives
+       '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+         ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
+         ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
   ;; (setq configuration-layer-elpa-archives
   ;;       '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
   ;;         ("org-cn"   . "http://elpa.emacs-china.org/org/")
@@ -542,7 +547,6 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
   ;; Spacemacs
-  (spacemacs//set-monospaced-font   "Hack" "WenQuanYi Micro Hei" 14 16)
 
   ;; Functions
   (defun backward-kill-line (arg)
@@ -557,7 +561,6 @@ before packages are loaded."
   ;; smooth-scrolling
   (setq smooth-scroll-margin 3)
   (setq flycheck-pos-tip-timeout 0)
-  (setq org-reveal-root "file:///home/kj/Lab/resources/reveal.js")
   (setq evil-default-state 'emacs)
   (setq-default evil-escape-key-sequence "qz")
   (setq projectile-enable-caching t)
@@ -566,7 +569,6 @@ before packages are loaded."
 
   ;; My keybindings
   (global-unset-key (kbd "C-x C-z"))  ;; Disable suspend-frame
-  (global-set-key (kbd "C-z") 'evil-normal-state)
   (global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
   (global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
   (global-set-key (kbd "S-C-<down>") 'shrink-window)
@@ -576,14 +578,15 @@ before packages are loaded."
   (global-set-key (kbd "S-C-o") 'open-line)
   (global-set-key (kbd "C-x F") (lambda ()
                                   (interactive)
-                                  (message (buffer-file-name))))
+                                  (let ((filename (buffer-file-name)))
+                                       (message filename)
+                                       (kill-new filename))))
 
   (global-set-key (kbd "S-C-k") 'backward-kill-line)
   (global-set-key (kbd "M-m M-s c") 'spacemacs/evil-search-clear-highlight)
   (global-set-key (kbd "M-m M-s M-c") 'spacemacs/evil-search-clear-highlight)
   (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
   (define-key key-translation-map (kbd "M-m M-m") (kbd "M-m p f"))
-  (global-set-key (kbd "M-m M-m") 'helm-projectile-find-file)
 
   (windmove-default-keybindings 'meta)
 
@@ -606,8 +609,8 @@ If SPLIT-ONEWINDOW is non-`nil' window is split in persistent action."
     (define-key company-active-map (kbd "RET") nil)
     (define-key company-active-map (kbd "C-<return>") 'company-complete-selection)
     (define-key company-active-map (kbd "C-RET") 'company-complete-selection))
-  (with-eval-after-load 'intero
-    (flycheck-add-next-checker 'intero '(warning . haskell-hlint)))
+  ;; (with-eval-after-load 'intero
+  ;;   (flycheck-add-next-checker 'intero '(warning . haskell-hlint)))
 
   ;; https://github.com/syl20bnr/spacemacs/issues/9549
   ;; (require 'helm-bookmark)
@@ -626,6 +629,7 @@ If SPLIT-ONEWINDOW is non-`nil' window is split in persistent action."
 
   ;; (setq intero-blacklist '("~/Lab/external/purescript"))
   ;; NOTE: M-m m F should work fine
+  ;; (spacemacs//set-monospaced-font   "Fira Code" "Sarasa Mono SC" 16 20)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -647,13 +651,12 @@ This function is called at the very end of Spacemacs initialization."
  '(paradox-github-token t)
  '(safe-local-variable-values
    (quote
-    ((intero-targets "accel:lib" "accel:exe:T" "accel:exe:docker-assist" "accel:exe:initdocker" "accel:test:accel-test")
-     (intero-targets "earnest:lib" "earnest:exe:earnest-exe" "earnest:test:earnest-test")
-     (conding . utf-8)
+    ((conding . utf-8)
      (typescript-backend . tide)
      (typescript-backend . lsp)
      (javascript-backend . tern)
-     (javascript-backend . lsp)))))
+     (javascript-backend . lsp))))
+ '(send-mail-function (quote mailclient-send-it)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
