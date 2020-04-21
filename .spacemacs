@@ -518,6 +518,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;;       '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
   ;;         ("org-cn"   . "http://elpa.zilongshanren.com/org/")
   ;;         ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
+<<<<<<< HEAD
   ;; (setq configuration-layer-elpa-archives
   ;;      '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
   ;;        ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
