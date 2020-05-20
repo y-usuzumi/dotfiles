@@ -518,15 +518,14 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;;       '(("melpa-cn" . "http://elpa.zilongshanren.com/melpa/")
   ;;         ("org-cn"   . "http://elpa.zilongshanren.com/org/")
   ;;         ("gnu-cn"   . "http://elpa.zilongshanren.com/gnu/")))
-<<<<<<< HEAD
   ;; (setq configuration-layer-elpa-archives
   ;;      '(("melpa-cn" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
   ;;        ("org-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")
   ;;       ("gnu-cn"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")))
-  (setq configuration-layer-elpa-archives
-        '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
-          ("org-cn"   . "http://elpa.emacs-china.org/org/")
-          ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
+  ;; (setq configuration-layer-elpa-archives
+  ;;       '(("melpa-cn" . "http://elpa.emacs-china.org/melpa/")
+  ;;         ("org-cn"   . "http://elpa.emacs-china.org/org/")
+  ;;         ("gnu-cn"   . "http://elpa.emacs-china.org/gnu/")))
   (setq-default tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
   ;; (add-hook 'after-make-frame-functions
   ;;           (lambda (frame)
